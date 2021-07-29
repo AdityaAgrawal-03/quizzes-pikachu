@@ -7,7 +7,7 @@ export type InitialState = {
   currentQuestion: number;
   score: number;
   userSelectedOptions: string[];
-  finalScore: number
+  
 };
 
 export type Action =
@@ -17,7 +17,11 @@ export type Action =
   | {
       type: "CHECK_OPTION";
       payload: { quizId: string; questionId: string; optionId: string };
-    };
+    }
+  | { type: "INCREMENT_SCORE"; payload: {points: number, optionId: string} }
+  | { type: "DECREMENT_SCORE"; payload: {points: number, optionId: string} }
+  | { type: "DECREMENT_SCORE_WITHOUT_SELECTING", payload: number }
+  | { type: "RESET_QUIZ" };
 
 export type DataContextTypes = {
   state: InitialState;

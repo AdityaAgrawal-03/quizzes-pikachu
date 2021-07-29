@@ -7,7 +7,7 @@ import { Result } from "./pages/Result/Result";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-300">
+    <div className="min-h-screen bg-trueGray-900 text-white">
      <Routes>
        <Route path="/" element={<Home />} />
        <Route path="/quiz/:quizId" element={<QuizPage />} />

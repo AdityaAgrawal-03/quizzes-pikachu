@@ -16,7 +16,9 @@ export type Quiz = {
   _id: string,
   name: string,
   coverImage: string
-  questions: Question[]
+  questions: Question[],
+  totalQuestions: number,
+  totalPoints: number
 }
 
 export type QuizDB = {
