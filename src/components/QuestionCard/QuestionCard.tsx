@@ -36,7 +36,6 @@ export function QuestionCard({ item }: QuestionCardProps) {
                 }
               >
                 {option?.text}
-                
               </p>
             )}
           </div>

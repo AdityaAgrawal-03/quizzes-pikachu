@@ -1,18 +1,21 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { QuestionCard } from "../../components/QuestionCard/QuestionCard";
 import { useData } from "../../context/DataContext/DataContext";
 
 export function Result() {
   const {
-    state: { score, currentQuiz },
+    state: { score, currentQuiz, userSelectedOptions },
   } = useData();
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("from location", { location });
 
-  const { name, questions, totalPoints } = currentQuiz ?? {
+  const { name, questions, totalPoints, totalQuestions } = currentQuiz ?? {
     name: "default quiz",
     questions: [],
     totalPoints: 25,
+    totalQuestions: 5,
   };
 
   useEffect(() => {
@@ -20,13 +23,26 @@ export function Result() {
   }, [currentQuiz, navigate]);
 
   return (
-    <div className="flex flex-col justify-center">
-      <div className="text-2xl text-center mt-8 uppercase">
-        <h1> {name} </h1>
-        <h2>
-          {" "}
-          Final Score: {score} / {totalPoints}{" "}
-        </h2>
+    <div className="flex flex-col justify-center text-2xl text-center">
+      <h1 className="uppercase my-8 text-3xl"> {name} </h1>
+      <div className="mx-auto flex mt-4 uppercase">
+        <div className="mr-4">
+          <div className="flex rounded-full border-green-500 border-4 h-32 w-32 ring-green-500 ring-4 shadow-2xl">
+            <p className="text-center self-center mx-auto">
+              {score} / {totalPoints}
+            </p>
+          </div>
+          <p className="mt-4">final score</p>
+        </div>
+
+        <div className="ml-4">
+          <div className="flex rounded-full border-green-500 border-4 h-32 w-32 ring-green-500 ring-4">
+            <p className="text-center self-center mx-auto">
+              {userSelectedOptions.length} / {totalQuestions}
+            </p>
+          </div>
+          <p className="mt-4">Attempted</p>
+        </div>
       </div>
 
       {questions.map((question) => (

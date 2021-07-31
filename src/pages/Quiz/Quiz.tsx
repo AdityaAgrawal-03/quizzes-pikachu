@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useData } from "../../context/DataContext/DataContext";
 import { createTimer } from "../../utils/timer";
 import { Options } from "../../data/data.types";
@@ -9,6 +9,8 @@ export function QuizPage() {
   const navigate = useNavigate();
   const { quizId } = useParams();
   const [attempt, setAttempt] = useState(false);
+  const location = useLocation();
+  console.log({ location });
 
   console.log({ attempt });
 
@@ -17,7 +19,7 @@ export function QuizPage() {
     dispatch,
   } = useData();
 
-  const { isRunning, seconds, restart, pause, start } = useTimer({
+  const { isRunning, seconds, restart, pause } = useTimer({
     expiryTimestamp: createTimer(),
     onExpire: () => {
       console.log("from expire", currentQuestion);
@@ -130,7 +132,11 @@ export function QuizPage() {
             ))}
             <button
               disabled={!attempt}
-              className="bg-green-500 rounded-2xl p-4 uppercase mt-4"
+              className={
+                attempt
+                  ? "bg-green-500 rounded-2xl p-4 uppercase mt-4"
+                  : "rounded-2xl p-4 uppercase cursor-not-allowed bg-trueGray-700 mt-4"
+              }
               onClick={() => {
                 if (currentQuestion === questions.length - 1) {
                   navigate("/result");
