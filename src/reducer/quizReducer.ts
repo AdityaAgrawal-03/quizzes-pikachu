@@ -7,6 +7,7 @@ export const initialState: InitialState = {
   currentQuestion: -1,
   score: 0,
   userSelectedOptions: [],
+  dashboard: [],
 };
 
 export const quizReducer = (
@@ -17,11 +18,28 @@ export const quizReducer = (
     case "INITIALIZE_QUIZ":
       return { ...state, quizzes: [...action.payload] };
 
+    case "INITIALIZE_DASHBOARD":
+      return {
+        ...state,
+        dashboard: [
+          ...state.dashboard,
+          {
+            quiz: action.payload.quizName,
+            scores: [
+              { user: action.payload.user, score: action.payload.score },
+            ],
+          },
+        ],
+      };
+
     case "SET_CURRENT_QUIZ":
       const setQuiz = state.quizzes.find(
         (quiz) => quiz._id === action.payload.quizId
       ) as Quiz;
       return { ...state, currentQuiz: setQuiz };
+
+    case "FINISH_QUIZ": 
+        return { ...state, currentQuestion: action.payload.questionsLength }
 
     case "SET_CURRENT_QUESTION":
       return { ...state, currentQuestion: state.currentQuestion + 1 };

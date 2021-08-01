@@ -21,6 +21,20 @@ export type Quiz = {
   totalPoints: number
 }
 
+export type UserScore = {
+  user: string,
+  score: number
+}
+
+export type QuizScores = {
+  quiz: string,
+  scores: UserScore[]
+}
+
+export type Dashboard = {
+  quizScores: QuizScores[]
+}
+
 export type QuizDB = {
   quizzes: Quiz[],
   name: string

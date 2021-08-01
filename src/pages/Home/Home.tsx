@@ -1,12 +1,16 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useData } from "../../context/DataContext/DataContext";
 import { QuizCard } from "../../components/QuizCard/QuizCard";
 
 export function Home() {
   const {
-    state: { quizzes },
+    state: { quizzes, dashboard },
     dispatch,
   } = useData();
+  const navigate = useNavigate();
+
+  console.log({ dashboard })
 
   useEffect(() => {
     dispatch({ type: "RESET_QUIZ" });
@@ -17,13 +21,13 @@ export function Home() {
       {quizzes.length === 0 ? (
         <div className="flex justify-center ">
           <div className="bg-white w-4 h-4 rounded-full transition-all animate-bounce ease-in-out delay-75 mx-2 my-20">
-            {" "}
+            
           </div>
           <div className="bg-white w-4 h-4 rounded-full transition-all animate-bounce ease-in-out delay-100 mx-2 my-20">
-            {" "}
+            
           </div>
           <div className="bg-white w-4 h-4 rounded-full transition-all animate-bounce ease-in-out delay-150 mx-2 my-20">
-            {" "}
+            
           </div>
         </div>
       ) : (
@@ -33,6 +37,7 @@ export function Home() {
           ))}
         </div>
       )}
+      <button onClick={() => navigate("/dashboard")}>View Dashboard</button>
     </div>
   );
 }

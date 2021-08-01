@@ -23,6 +23,7 @@ export function DataProvider({ children }: DataProviderProps) {
           data: { success, quizzes },
         } = await axios.get("https://quiz-backend.aditya365.repl.co/quiz");
         console.log({ quizzes });
+
         if (success) {
           dispatch({ type: "INITIALIZE_QUIZ", payload: quizzes });
         }

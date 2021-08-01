@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { QuestionCard } from "../../components/QuestionCard/QuestionCard";
 import { useData } from "../../context/DataContext/DataContext";
 
 export function Result() {
   const {
-    state: { score, currentQuiz, userSelectedOptions },
+    state: { score, currentQuiz, userSelectedOptions, dashboard },
+    dispatch,
   } = useData();
-  const navigate = useNavigate();
   const location = useLocation();
   console.log("from location", { location });
 
@@ -19,8 +19,17 @@ export function Result() {
   };
 
   useEffect(() => {
-    currentQuiz === null && navigate("/");
-  }, [currentQuiz, navigate]);
+    dispatch({
+      type: "INITIALIZE_DASHBOARD",
+      payload: {
+        quizName: currentQuiz?.name as string,
+        user: "Aditya",
+        score: score,
+      },
+    });
+  }, [dispatch, score, currentQuiz?.name]);
+
+  console.log({ dashboard });
 
   return (
     <div className="flex flex-col justify-center text-2xl text-center">

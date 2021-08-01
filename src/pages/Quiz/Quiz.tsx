@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useData } from "../../context/DataContext/DataContext";
 import { createTimer } from "../../utils/timer";
 import { Options } from "../../data/data.types";
@@ -9,24 +9,19 @@ export function QuizPage() {
   const navigate = useNavigate();
   const { quizId } = useParams();
   const [attempt, setAttempt] = useState(false);
-  const location = useLocation();
-  console.log({ location });
-
-  console.log({ attempt });
 
   const {
     state: { score, currentQuestion, currentQuiz },
     dispatch,
   } = useData();
 
-  const { isRunning, seconds, restart, pause } = useTimer({
+  const { seconds, restart, pause } = useTimer({
     expiryTimestamp: createTimer(),
     onExpire: () => {
       console.log("from expire", currentQuestion);
       currentQuestion >= 0 && checkOptionWithoutSelecting(false);
     },
   });
-  console.log({ isRunning });
 
   const { name, questions, totalQuestions } = currentQuiz ?? {
     name: "default quiz",
@@ -38,10 +33,6 @@ export function QuizPage() {
     "This quiz contains total 5 questions",
     "Each question carries 5 marks for correct answer and -2 marks for wrong answer",
   ];
-
-  useEffect(() => {
-    dispatch({ type: "SET_CURRENT_QUIZ", payload: { quizId: quizId } });
-  }, [quizId, dispatch]);
 
   const checkOption = (option: Options) => {
     option?.isRight
@@ -66,13 +57,19 @@ export function QuizPage() {
   const checkOptionWithoutSelecting = (isRight: boolean) => {
     console.log("checking");
     !isRight &&
-      dispatch({
+      dispatch({  
         type: "DECREMENT_SCORE_WITHOUT_SELECTING",
         payload: questions[currentQuestion].negativePoints,
       });
     setAttempt(true);
     pause();
   };
+
+  useEffect(() => {
+    currentQuestion === questions.length && navigate("/");
+    dispatch({ type: "SET_CURRENT_QUIZ", payload: { quizId: quizId } });
+    return () => {}
+  }, [])
 
   return (
     <div className="flex flex-col items-center justify-center text-white text-xl">
@@ -112,9 +109,9 @@ export function QuizPage() {
               </p>
               <p> Score: {score} </p>
             </div>
-            <p className="mb-4">{questions[currentQuestion].question}</p>
+            <p className="mb-4">{ currentQuiz?.questions[currentQuestion]?.question}</p>
 
-            {questions[currentQuestion].options.map((option) => (
+            {currentQuiz?.questions[currentQuestion]?.options.map((option) => (
               <div key={option._id} className="bg-trueGray-700 my-2 rounded-xl">
                 <button
                   className={
@@ -139,6 +136,7 @@ export function QuizPage() {
               }
               onClick={() => {
                 if (currentQuestion === questions.length - 1) {
+                  dispatch({ type: "FINISH_QUIZ", payload: { questionsLength: questions.length } })
                   navigate("/result");
                 } else {
                   restart(createTimer());
