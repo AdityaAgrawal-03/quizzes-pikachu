@@ -18,7 +18,6 @@ export function QuizPage() {
   const { seconds, restart, pause } = useTimer({
     expiryTimestamp: createTimer(),
     onExpire: () => {
-      console.log("from expire", currentQuestion);
       currentQuestion >= 0 && checkOptionWithoutSelecting(false);
     },
   });
@@ -57,7 +56,7 @@ export function QuizPage() {
   const checkOptionWithoutSelecting = (isRight: boolean) => {
     console.log("checking");
     !isRight &&
-      dispatch({  
+      dispatch({
         type: "DECREMENT_SCORE_WITHOUT_SELECTING",
         payload: questions[currentQuestion].negativePoints,
       });
@@ -66,10 +65,8 @@ export function QuizPage() {
   };
 
   useEffect(() => {
-    currentQuestion === questions.length && navigate("/");
     dispatch({ type: "SET_CURRENT_QUIZ", payload: { quizId: quizId } });
-    return () => {}
-  }, [])
+  }, [dispatch, quizId]);
 
   return (
     <div className="flex flex-col items-center justify-center text-white text-xl">
@@ -109,7 +106,9 @@ export function QuizPage() {
               </p>
               <p> Score: {score} </p>
             </div>
-            <p className="mb-4">{ currentQuiz?.questions[currentQuestion]?.question}</p>
+            <p className="mb-4">
+              {currentQuiz?.questions[currentQuestion]?.question}
+            </p>
 
             {currentQuiz?.questions[currentQuestion]?.options.map((option) => (
               <div key={option._id} className="bg-trueGray-700 my-2 rounded-xl">
@@ -136,8 +135,7 @@ export function QuizPage() {
               }
               onClick={() => {
                 if (currentQuestion === questions.length - 1) {
-                  dispatch({ type: "FINISH_QUIZ", payload: { questionsLength: questions.length } })
-                  navigate("/result");
+                  navigate("/result", { replace: true });
                 } else {
                   restart(createTimer());
                   setAttempt(false);
@@ -145,8 +143,7 @@ export function QuizPage() {
                 }
               }}
             >
-              {" "}
-              Next{" "}
+              Next
             </button>
           </div>
         </>

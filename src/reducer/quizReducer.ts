@@ -38,8 +38,7 @@ export const quizReducer = (
       ) as Quiz;
       return { ...state, currentQuiz: setQuiz };
 
-    case "FINISH_QUIZ": 
-        return { ...state, currentQuestion: action.payload.questionsLength }
+    
 
     case "SET_CURRENT_QUESTION":
       return { ...state, currentQuestion: state.currentQuestion + 1 };
