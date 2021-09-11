@@ -6,18 +6,21 @@ export function Dashboard() {
   } = useData();
 
   return (
-    <div>
-      {dashboard.map((item) => (
-        <div>
-          <p> {item.quiz} </p>
-          {item.scores.map((score) => (
-            <div>
-              <p> {score.user} </p>
-              <p> {score.score} </p>
+    <div className="flex justify-center">
+      {dashboard.length ? (
+        <div className="mt-8">
+          {dashboard.map((item) => (
+            <div key={item.quiz} className="mb-8">
+              <p className="text-center my-4 text-2xl uppercase"> {item.quiz} </p> 
+              <div className="circle">
+                <p className="circle-text text-xl">{item.score} / 25</p>
+              </div>
             </div>
           ))}
         </div>
-      ))}
+      ) : (
+        <p className="text-xl m-auto mt-8"> Play a quiz to view scores! </p>
+      )}
     </div>
   );
 }
