@@ -5,7 +5,7 @@ import { useData } from "../../context/DataContext/DataContext";
 
 export function Result() {
   const {
-    state: { score, currentQuiz, userSelectedOptions, dashboard },
+    state: { score, currentQuiz, userSelectedOptions },
     dispatch,
   } = useData();
   const location = useLocation();
@@ -29,7 +29,6 @@ export function Result() {
     });
   }, [dispatch, score, currentQuiz?.name]);
 
-  console.log({ dashboard });
 
   return (
     <div className="flex flex-col justify-center text-2xl text-center">

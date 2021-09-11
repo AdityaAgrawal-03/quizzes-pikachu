@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useReducer } from "react";
 
 import { initialState, quizReducer } from "../../reducer/quizReducer";
 import { DataContextTypes } from "./dataContext.types";
+import { API_URL } from "../../utils/constants"
 
 export const DataContext = createContext<DataContextTypes>({
   state: initialState,
@@ -21,8 +22,7 @@ export function DataProvider({ children }: DataProviderProps) {
       try {
         const {
           data: { success, quizzes },
-        } = await axios.get("https://quiz-backend.aditya365.repl.co/quiz");
-        console.log({ quizzes });
+        } = await axios.get(`${API_URL}/quiz`);
 
         if (success) {
           dispatch({ type: "INITIALIZE_QUIZ", payload: quizzes });

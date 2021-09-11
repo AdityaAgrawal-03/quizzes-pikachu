@@ -96,10 +96,10 @@ export function QuizPage() {
         </div>
       ) : (
         <>
-          <h1 className="uppercase text-center font-bold text-2xl tracking-wide my-4">
+          <h1 className="uppercase text-center font-bold text-3xl tracking-wide my-4">
             {seconds}
           </h1>
-          <div className="rounded-xl shadow-2xl w-1/2 text-xl flex flex-col bg-trueGray-800 p-8 my-20">
+          <div className="rounded-xl shadow-2xl w-1/2 text-xl flex flex-col bg-trueGray-800 p-8 my- 20">
             <div className="my-4 flex justify-between">
               <p>
                 Question: {currentQuestion + 1} / {totalQuestions}
@@ -130,7 +130,7 @@ export function QuizPage() {
               disabled={!attempt}
               className={
                 attempt
-                  ? "bg-green-500 rounded-2xl p-4 uppercase mt-4"
+                  ? "bg-green-700 rounded-2xl p-4 uppercase mt-4 hover:bg-green-900"
                   : "rounded-2xl p-4 uppercase cursor-not-allowed bg-trueGray-700 mt-4"
               }
               onClick={() => {
