@@ -21,14 +21,9 @@ export type Quiz = {
   totalPoints: number
 }
 
-export type UserScore = {
-  user: string,
-  score: number
-}
-
 export type QuizScores = {
   quiz: string,
-  scores: UserScore[]
+  score: number 
 }
 
 export type Dashboard = {

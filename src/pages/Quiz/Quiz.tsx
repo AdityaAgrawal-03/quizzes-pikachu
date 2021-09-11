@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { useParams, useNavigate } from "react-router-dom";
 import { useData } from "../../context/DataContext/DataContext";
-import { createTimer } from "../../utils/timer";
+import { quizInfo, createTimer } from "../../utils/index";
 import { Options } from "../../data/data.types";
 
 export function QuizPage() {
@@ -28,11 +28,6 @@ export function QuizPage() {
     totalQuestions: 5,
   };
 
-  const quizInfo = [
-    "This quiz contains total 5 questions",
-    "Each question carries 5 marks for correct answer and -2 marks for wrong answer",
-  ];
-
   const checkOption = (option: Options) => {
     option?.isRight
       ? dispatch({
@@ -54,7 +49,6 @@ export function QuizPage() {
   };
 
   const checkOptionWithoutSelecting = (isRight: boolean) => {
-    console.log("checking");
     !isRight &&
       dispatch({
         type: "DECREMENT_SCORE_WITHOUT_SELECTING",

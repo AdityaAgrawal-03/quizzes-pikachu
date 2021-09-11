@@ -14,7 +14,7 @@ export type Action =
   | { type: "INITIALIZE_QUIZ"; payload: Quiz[] }
   | {
       type: "INITIALIZE_DASHBOARD";
-      payload: { quizName: string; user: string; score: number };
+      payload: { quizName: string; score: number };
     }
   | { type: "SET_CURRENT_QUIZ"; payload: { quizId: string } }
   | { type: "SET_CURRENT_QUESTION" }

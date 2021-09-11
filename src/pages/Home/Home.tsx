@@ -5,11 +5,9 @@ import { QuizCard } from "../../components/QuizCard/QuizCard";
 
 export function Home() {
   const {
-    state: { quizzes, dashboard },
+    state: { quizzes },
     dispatch,
   } = useData();
-
-  console.log({ dashboard });
 
   useEffect(() => {
     dispatch({ type: "RESET_QUIZ" });
@@ -18,10 +16,10 @@ export function Home() {
   return (
     <div>
       {quizzes.length === 0 ? (
-        <div className="flex justify-center ">
-          <div className="bg-white w-4 h-4 rounded-full transition-all animate-bounce ease-in-out delay-75 mx-2 my-20"></div>
-          <div className="bg-white w-4 h-4 rounded-full transition-all animate-bounce ease-in-out delay-100 mx-2 my-20"></div>
-          <div className="bg-white w-4 h-4 rounded-full transition-all animate-bounce ease-in-out delay-150 mx-2 my-20"></div>
+        <div className="flex justify-center">
+          <div className="loader delay-75"></div>
+          <div className="loader delay-100"></div>
+          <div className="loader delay-150"></div>
         </div>
       ) : (
         <div className="flex flex-col items-center">
@@ -30,9 +28,7 @@ export function Home() {
               <QuizCard key={quiz._id} quiz={quiz} />
             ))}
           </div>
-          <Link to="/dashboard" className="">
-            View Dashboard
-          </Link>
+          <Link to="/dashboard" className="p-4 bg-trueGray-800 rounded-lg text-lg">View Dashboard</Link>
         </div>
       )}
     </div>

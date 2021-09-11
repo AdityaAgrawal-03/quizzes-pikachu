@@ -18,19 +18,11 @@ export const quizReducer = (
     case "INITIALIZE_QUIZ":
       return { ...state, quizzes: [...action.payload] };
 
-    case "INITIALIZE_DASHBOARD":
+    case "INITIALIZE_DASHBOARD": 
       return {
-        ...state,
-        dashboard: [
-          ...state.dashboard,
-          {
-            quiz: action.payload.quizName,
-            scores: [
-              { user: action.payload.user, score: action.payload.score },
-            ],
-          },
-        ],
-      };
+         ...state,
+         dashboard: [...state.dashboard, { quiz: action.payload.quizName, score: action.payload.score }]
+      }
 
     case "SET_CURRENT_QUIZ":
       const setQuiz = state.quizzes.find(
