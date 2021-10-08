@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .loader {
+    @apply bg-white w-4 h-4 rounded-full transition-all animate-bounce ease-in-out mx-2 my-20
+  }
+
+  .circle {
+    @apply flex rounded-full border-green-500 border-4 h-32 w-32 ring-green-500 ring-4 shadow-2xl
+  }
+
+  .circle-text {
+    @apply text-center self-center mx-auto
+  }
+}
